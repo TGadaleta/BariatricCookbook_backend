@@ -1,0 +1,69 @@
+# ⚡ 1. General Ignored Files ⚡
+.DS_Store
+Thumbs.db
+*.log
+*.sqlite3
+*.pyc
+*.pyo
+*.pyd
+*.swp
+__pycache__/
+.vscode/
+.idea/
+.env
+*.pid
+
+# ⚡ 2. Python / Django Files ⚡
+db.sqlite3
+instance/
+media/
+staticfiles/
+*.egg-info/
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+migrations/__pycache__/
+.env
+config/settings/local.py
+
+# ⚡ 3. Virtual Environments ⚡
+venv/
+.env/
+.venv/
+env/
+Pipfile.lock
+
+# ⚡ 4. Node.js / React Files ⚡
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.env.local
+.env.development
+.env.production
+build/
+dist/
+
+# ⚡ 5. PostgreSQL ⚡
+pgdata/
+*.sql
+*.dump
+
+# ⚡ 6. Docker ⚡
+docker-compose.override.yml
+.dockerignore
+
+# ⚡ 7. JetBrains / VS Code ⚡
+.idea/
+.vscode/
+
+# ⚡ 8. Coverage & Testing ⚡
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+htmlcov/
+pytest_cache/
