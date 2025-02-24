@@ -46,8 +46,8 @@ INSTALLED_APPS = [
     'healthymeal',
     'rest_framework',
     'rest_framework_simplejwt',
-    'api',
     'openai',
+    'openai_api',
     'userauth',
     
 ]
