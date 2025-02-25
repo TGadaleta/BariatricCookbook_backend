@@ -139,16 +139,21 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Custom user model
+AUTH_USER_MODEL = 'userauth.CustomUser'
+
+# REST framework settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
 
+# JWT settings for Simple JWT package
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),  # Access token expires in 30 minutes
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),  # Refresh token valid for 7 days
-    "ROTATE_REFRESH_TOKENS": True,  # Issue a new refresh token on use
-    "BLACKLIST_AFTER_ROTATION": True,  # Blacklist old refresh tokens
-    "AUTH_HEADER_TYPES": ("Bearer",),  # Users must send "Authorization: Bearer <token>"
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=24),  # Adjust the access token duration
+    "AUTH_HEADER_TYPES": ("Bearer",),  # Standard Authorization header
+    "USER_ID_FIELD": "id",  # Ensures user ID is included in the token payload
+    "USER_ID_CLAIM": "user_id",
+    "SIGNING_KEY": "cookbookbariatric",  # Custom key for token signing
 }

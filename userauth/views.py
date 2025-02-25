@@ -1,28 +1,40 @@
 from django.contrib.auth import get_user_model
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from django.shortcuts import get_object_or_404
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.permissions import AllowAny
+from .serializers import RegisterSerializer, CustomTokenObtainSerializer
 
-# Create your views here.
+# Get the user model
 User = get_user_model()
 
-class CustomTokenObtainPairView(TokenObtainPairView):
-    """Customize JWT response to include user details."""
+class UserCreateView(generics.CreateAPIView):
+    """
+    API view for user registration.
+    """
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
+
+class CustomTokenObtainView(TokenObtainPairView):
+    """Customize JWT response to only return the access token."""
+    serializer_class = CustomTokenObtainSerializer
+
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
-        user = User.objects.get(email=request.data['email'])
-        response.data.update({'user_id': user.id, 'email': user.email})
+        
+        # Remove refresh token from response
+        if "refresh" in response.data:
+            del response.data["refresh"]
+        
         return response
 
 @api_view(["POST"])
 def logout_view(request):
-    """Blacklist a refresh token when logging out."""
-    try:
-        refresh_token = request.data["refresh"]
-        token = RefreshToken(refresh_token)
-        token.blacklist()
-        return Response({"detail": "Successfully logged out."}, status=status.HTTP_205_RESET_CONTENT)
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    """
+    Logout endpoint (placeholder since no refresh tokens exist).
+    """
+    return Response({"detail": "Logged out successfully."}, status=status.HTTP_200_OK)
