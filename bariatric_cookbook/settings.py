@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from datetime import timedelta
 import os
 from dotenv import load_dotenv
 
@@ -45,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'healthymeal',
     'rest_framework',
+    'rest_framework.authtoken',
     'openai',
     'openai_api',
     'userauth',
@@ -55,9 +55,9 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
@@ -149,15 +149,14 @@ AUTH_USER_MODEL = "userauth.CustomUser"
 # REST framework settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
     ),
 }
 
-# JWT settings for Simple JWT package
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=24),  # Adjust the access token duration
-    "AUTH_HEADER_TYPES": ("Bearer",),  # Standard Authorization header
-    "USER_ID_FIELD": "id",  # Ensures user ID is included in the token payload
-    "USER_ID_CLAIM": "user_id",
-    "SIGNING_KEY": "cookbookbariatric",  # Custom key for token signing
-}
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
+SESSION_COOKIE_AGE = 60*60*24  # 1 day
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False

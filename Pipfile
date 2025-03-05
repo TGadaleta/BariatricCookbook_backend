@@ -4,12 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-djangorestframework = "*"
 python-dotenv = "*"
 django-cors-headers = "*"
 openai = "*"
 psycopg = "*"
-djangorestframework-simplejwt = "*"
+djangorestframework = "*"
 
 [dev-packages]
 

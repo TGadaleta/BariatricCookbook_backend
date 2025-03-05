@@ -1,10 +1,10 @@
-from django.contrib.auth import get_user_model
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework import status, generics
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from django.contrib.auth import get_user_model, authenticate, login, logout
+from rest_framework import generics
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import AllowAny
-from .serializers import RegisterSerializer, CustomTokenObtainSerializer
+from .serializers import RegisterSerializer
+import json
 
 # Get the user model
 User = get_user_model()
@@ -17,22 +17,38 @@ class UserCreateView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
-class CustomTokenObtainView(TokenObtainPairView):
-    """Customize JWT response to only return the access token."""
-    serializer_class = CustomTokenObtainSerializer
+@csrf_exempt
+def login_view(request):
+    """
+    API view for user login.
+    """
+    if request.method == "POST":
+        data = json.loads(request.body)
+        email = data.get("email")
+        password = data.get("password")
+        user = authenticate(request, email=email, password=password)
+        if user:
+            login(request, user)
+            return JsonResponse({"message": "Login successful."})
+        else:
+            return JsonResponse({"message": "Invalid credentials."})
+    return JsonResponse({"message": "Invalid method."})
 
-    def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
-        
-        # Remove refresh token from response
-        if "refresh" in response.data:
-            del response.data["refresh"]
-        
-        return response
-
-@api_view(["POST"])
+@csrf_exempt
 def logout_view(request):
     """
-    Logout endpoint (placeholder since no refresh tokens exist).
+    API view for user logout.
     """
-    return Response({"detail": "Logged out successfully."}, status=status.HTTP_200_OK)
+    if request.method == "POST":
+        logout(request)
+        return JsonResponse({"message": "Logout successful."})
+    return JsonResponse({"message": "Invalid method."})
+
+def check_authentication(request):
+    """
+    Function to check if a user is authenticated.
+    """
+    if request.user.is_authenticated:
+        return JsonResponse({"authenticated": True, "user": request.user.email}, status=200)
+    else:
+        return JsonResponse({"authenticated": False}, status=401)

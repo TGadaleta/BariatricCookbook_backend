@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "77caf65443d6309bb327920d011453252a40c0909a8a4f624b0f05790772a753"
+            "sha256": "e0b2d4310eb0618e7cf7c8e1a98385578fb1c5980630eaf9944d1c729026f75d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -81,15 +81,6 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==3.15.2"
-        },
-        "djangorestframework-simplejwt": {
-            "hashes": [
-                "sha256:474a1b737067e6462b3609627a392d13a4da8a08b1f0574104ac6d7b1406f90e",
-                "sha256:4ef6b38af20cdde4a4a51d1fd8e063cbbabb7b45f149cc885d38d905c5a62edb"
-            ],
-            "index": "pypi",
-            "markers": "python_version >= '3.9'",
-            "version": "==5.5.0"
         },
         "h11": {
             "hashes": [
@@ -207,12 +198,12 @@
         },
         "openai": {
             "hashes": [
-                "sha256:27d9fe8de876e31394c2553c4e6226378b6ed85e480f586ccfe25b7193fb1750",
-                "sha256:729623efc3fd91c956f35dd387fa5c718edd528c4bed9f00b40ef290200fb2ce"
+                "sha256:9b7cd8f79140d03d77f4ed8aeec6009be5dcd79bbc02f03b0e8cd83356004f71",
+                "sha256:a155fa5d60eccda516384d3d60d923e083909cc126f383fe4a350f79185c232a"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==1.65.2"
+            "version": "==1.65.3"
         },
         "psycopg": {
             "hashes": [
@@ -336,14 +327,6 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==2.27.2"
-        },
-        "pyjwt": {
-            "hashes": [
-                "sha256:3b02fb0f44517787776cf48f2ae25d8e14f300e6d7545a4315cee571a415e850",
-                "sha256:7e1e5b56cc735432a7369cbfa0efe50fa113ebecdc04ae6922deba8b84582d0c"
-            ],
-            "markers": "python_version >= '3.8'",
-            "version": "==2.9.0"
         },
         "python-dotenv": {
             "hashes": [

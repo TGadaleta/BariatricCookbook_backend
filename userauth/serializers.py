@@ -1,24 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.tokens import AccessToken
 
 User = get_user_model()
-
-class CustomTokenObtainSerializer(TokenObtainPairSerializer):
-    """
-    Custom serializer that only returns an access token, removing the refresh token.
-    """
-    def validate(self, attrs):
-        data = super().validate(attrs)  # Call the parent class's validate method
-
-        # Retrieve the user from self.user
-        user = self.user
-
-        # Generate only the access token
-        access_token = AccessToken.for_user(user)
-        
-        return {"access": str(access_token)}
     
 class UserSerializer(serializers.ModelSerializer):
     """
